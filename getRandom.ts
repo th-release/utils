@@ -28,4 +28,4 @@ function getRandom = (type_: string, length: number) => {
       }
       return result;
     }
-  }
+}
