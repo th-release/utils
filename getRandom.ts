@@ -1,31 +1,26 @@
-function getRandom = (type_: string, length: number) => {
-    let result = "";
-    const type = type_.toLowerCase();
-    length = length ? length : 32;
-    let characters = "0123456789";
-    if (type === 'number' || type === 'numbers') {
-      characters = "0123456789";
-      for (let i = 0; i < length; i++) {
-        result += characters[Math.floor(Math.random() * characters.length)];
-      }
-      return result;
-    } else if (type === 'alphabet' || type === 'alphabets') { 
-      characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      for (let i = 0; i < length; i++) {
-        result += characters[Math.floor(Math.random() * characters.length)];
-      }
-      return result;
-    } else if (type === 'alphanumeric' || type === 'all') {
-      characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      for (let i = 0; i < length; i++) {
-        result += characters[Math.floor(Math.random() * characters.length)];
-      }
-      return result;
-    } else {
-      characters = type;
-      for (let i = 0; i < length; i++) {
-        result += characters[Math.floor(Math.random() * characters.length)];
-      }
-      return result;
-    }
+function getCharacters(type: string): string {
+  switch (type) {
+    case 'numeric':
+      return '0123456789';
+    case 'lowercase':
+      return 'abcdefghijklmnopqrstuvwxyz';
+    case 'uppercase':
+      return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    case 'alphanumeric':
+      return '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    default:
+      throw new Error(`Invalid type: ${type}`);
+  }
+}
+
+export default function getRandom(type: string, length: number): string {
+  let result = '';
+  const characters = getCharacters(type);
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+
+  return result;
 }
