@@ -6,6 +6,7 @@ function getCharacters(type: string): string {
       return 'abcdefghijklmnopqrstuvwxyz';
     case 'uppercase':
       return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    case 'all':
     case 'alphanumeric':
       return '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     default:
