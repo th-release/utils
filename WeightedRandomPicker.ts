@@ -1,18 +1,16 @@
 function getRandomWeightedItem(items: { name: string; weight: number }[]): string {
-  while (true) {
-    const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
+  const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
+  const randomWeight = Math.random() * totalWeight;
+  let accumulatedWeight = 0;
 
-    const randomWeight = Math.random() * totalWeight;
-
-    let accumulatedWeight = 0;
-    for (const item of items) {
-      accumulatedWeight += item.weight;
-      if (randomWeight <= accumulatedWeight) {
-        return item.name;
-      }
+  for (const item of items) {
+    accumulatedWeight += item.weight;
+    if (randomWeight <= accumulatedWeight) {
+      return item.name;
     }
   }
 }
+
 
 // test ------------------------------------------
 // const items = [
