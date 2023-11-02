@@ -2,9 +2,11 @@ import Multer from 'multer';
 import path from 'path';
 import getRandom from './getRandom';
 import { validType } from './checkFunctions';
+import { Request } from 'express';
 
 interface MulterStorage {
-  callbackPath: string
+  callbackPath: string,
+  fnFunction?: (req: Request, file: Express.Multer.File, callback: (error: Error, destination: string) => void) => void
 }
 
 type MimeType =
@@ -38,9 +40,13 @@ export default class MulterUtils {
         callback(null, path.resolve(process.cwd(), 'public/' + storage.callbackPath))
       },
       filename: (req, file, callback) => {
-        const now = new Date();
-        const extension = path.extname(file.originalname);
-        callback(null, file.fieldname + '-' + getRandom('all', 32) + now.getTime() + extension);
+        if (storage.fnFunction) {
+          storage.fnFunction(req, file, callback);
+        } else {
+          const now = new Date();
+          const extension = path.extname(file.originalname);
+          callback(null, file.fieldname + '-' + getRandom('all', 32) + now.getTime() + extension);
+        }
       }
     })
 
