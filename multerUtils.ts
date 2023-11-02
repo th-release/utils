@@ -1,12 +1,26 @@
 import Multer from 'multer';
 import path from 'path';
 import getRandom from './getRandom';
-import { validType } from './checkFunctions';
 import { Request } from 'express';
 
-interface MulterStorage {
-  callbackPath: string,
-  fnFunction?: (req: Request, file: Express.Multer.File, callback: (error: Error, destination: string) => void) => void
+interface MulterConfig {
+  callbackPath?: string,
+  cbFunction?: (
+    req: Request,
+    file: Express.Multer.File,
+    callback:
+      (error: Error, destination: string) => void
+  ) => void
+  fnFunction?: (
+    req: Request,
+    file: Express.Multer.File,
+    callback: (error: Error, destination: string) => void
+  ) => void,
+  filter?: (
+    req: Request,
+    file: Express.Multer.File,
+    callback: Multer.FileFilterCallback
+  ) => void
 }
 
 type MimeType =
@@ -34,18 +48,22 @@ export default class MulterUtils {
   private multer: Multer.Multer;
   private storage: Multer.StorageEngine;
 
-  constructor(storage: MulterStorage, mime: MimeType[], fileSize: number) {
+  constructor(config: MulterConfig, mime: MimeType[], fileSize: number) {
     this.storage = Multer.diskStorage({
       destination: (req, file, callback) => {
-        callback(null, path.resolve(process.cwd(), 'public/' + storage.callbackPath))
+        if (config.cbFunction && !config.callbackPath) {
+          return config.cbFunction(req, file, callback)
+        } else {
+          return callback(null, path.resolve(process.cwd(), 'public/' + config.callbackPath))
+        }
       },
       filename: (req, file, callback) => {
-        if (storage.fnFunction) {
-          storage.fnFunction(req, file, callback);
+        if (config.fnFunction) {
+          return config.fnFunction(req, file, callback);
         } else {
           const now = new Date();
           const extension = path.extname(file.originalname);
-          callback(null, file.fieldname + '-' + getRandom('all', 32) + now.getTime() + extension);
+          return callback(null, file.fieldname + '-' + getRandom('all', 32) + now.getTime() + extension);
         }
       }
     })
@@ -53,8 +71,13 @@ export default class MulterUtils {
     this.multer = Multer({
       storage: this.storage,
       fileFilter: (req, file, callback) => {
-        if (!mime.includes(file.mimetype as MimeType)) callback(null, false);
-        callback(null, true);
+        if (config.filter) {
+          return config.filter(req, file, callback);
+        } else {
+          if (!mime.includes(file.mimetype as MimeType))
+            return callback(null, false);
+          return callback(null, true);
+        }
       },
       limits: { fileSize: fileSize * 1024 * 1024 },
     })
