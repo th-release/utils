@@ -1,4 +1,7 @@
-function getCharacters(type: string): string {
+function getCharacters(
+  type:
+    'numeric' | 'lowercase' | 'uppercase' | 'all' | 'alphanumeric'
+): string {
   switch (type) {
     case 'numeric':
       return '0123456789';
@@ -14,7 +17,10 @@ function getCharacters(type: string): string {
   }
 }
 
-export default function getRandom(type: string, length: number): string {
+export default function getRandom(
+  type: 'numeric' | 'lowercase' | 'uppercase' | 'all' | 'alphanumeric',
+  length: number
+): string {
   let result = '';
   const characters = getCharacters(type);
 
