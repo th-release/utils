@@ -1,0 +1,10 @@
+{
+  "name": "utils",
+  "version": "0.0.1",
+  "description": "th-release의 자주쓰는 함수 모음!",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "18.11.9",
+    "typescript": "4.9.3"
+  }
+}
