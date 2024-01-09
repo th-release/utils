@@ -2,7 +2,7 @@ package main
 
 // 추세선을 그리기 위해 만들었음.
 
-func makeLine_(p1, p2 float64, di int) []float64 {
+func MakeLine_(p1, p2 float64, di int) []float64 {
 	var rtv []float64
 	if p1 > p2 {
 		for i := 1; i < 100; i++ {

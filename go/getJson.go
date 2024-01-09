@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func getJson(filePath string) (interface{}, error) {
+func GetJson(filePath string) (interface{}, error) {
 	fileContent, err := os.ReadFile(filePath)
 	if err != nil {
 		return nil, err

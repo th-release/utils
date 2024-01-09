@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 )
 
-func getFilePath(file string) string {
+func GetFilePath(file string) string {
 	dir, err := os.Getwd()
 	if err != nil {
 		panic(err)

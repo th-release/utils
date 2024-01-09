@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/sha3"
 )
 
-func hash(input string) (string, error) {
+func HashSha3_512(input string) (string, error) {
 	hasher := sha3.New512()
 	hasher.Write([]byte(input))
 	hashBytes := hasher.Sum(nil)

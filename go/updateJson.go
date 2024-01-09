@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func updateJson(filePath string, data interface{}) error {
+func UpdateJson(filePath string, data interface{}) error {
 	jsonData, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		return err

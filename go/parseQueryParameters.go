@@ -5,7 +5,7 @@ import (
 	"net/url"
 )
 
-func parseQueryParameters(link string) (map[string]string, error) {
+func ParseQueryParameters(link string) (map[string]string, error) {
 	// URL 파싱
 	parsedURL, err := url.Parse(link)
 	if err != nil {
