@@ -8,7 +8,7 @@ import (
 	utils "github.com/th-release/utils/go"
 )
 
-func CreateFileIfNotExist(filePath string, initialContent interface{}) error {
+func CreateJsonIfNotExist(filePath string, initialContent interface{}) error {
 	_, err := os.Open(filePath)
 	if err != nil {
 		err := os.MkdirAll(utils.GetFilePath(""), os.ModePerm)
