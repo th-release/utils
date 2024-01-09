@@ -1,4 +1,4 @@
-package main
+package utils
 
 // go get golang.org/x/crypto/sha3
 

@@ -1,4 +1,4 @@
-package main
+package utils
 
 // 추세선을 그리기 위해 만들었음.
 
