@@ -4,14 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-
-	utils "github.com/th-release/utils/go"
 )
 
 func CreateJsonIfNotExist(filePath string, initialContent interface{}) error {
 	_, err := os.Open(filePath)
 	if err != nil {
-		err := os.MkdirAll(utils.GetFilePath(""), os.ModePerm)
+		err := os.MkdirAll(GetFilePath(""), os.ModePerm)
 		if err != nil {
 			return fmt.Errorf("setup error: %v", err)
 		}
