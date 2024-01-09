@@ -3,10 +3,12 @@ package utils
 import (
 	"os"
 	"path/filepath"
+
+	utils "github.com/th-release/utils/go"
 )
 
 func CreateDirectoryIfNotExist(filePath string) error {
-	dir := filepath.Dir(filePath) // 파일 경로로부터 디렉토리 경로 추출
+	dir := filepath.Dir(utils.GetFilePath("") + filePath) // 파일 경로로부터 디렉토리 경로 추출
 
 	// 디렉토리가 이미 존재하는지 확인
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
