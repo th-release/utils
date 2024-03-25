@@ -26,4 +26,9 @@ public class StringUtility {
 
         return paramString.toString();
     }
+
+    public static <T> T stringToClass(String jsonString, Class<T> classT) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(jsonString, classT);
+    }
 }
