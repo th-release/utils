@@ -1,4 +1,9 @@
-class ConvertObjectToList {
+public class ObjectUtility {
+        public static <T> T convertObjectToClass(Object data, Class<T> clazz) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(data, clazz);
+    }
+
     public static List<?> convertObjectToList(Object obj) {
         List<?> list = new ArrayList<>();
         if (obj.getClass().isArray()) {
