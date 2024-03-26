@@ -1,7 +1,7 @@
 package com.threlease.base.utils;
 
 public class EnumStringComparison {
-    public static <T extends Enum<T>> boolean compareEnumString(String str, Class<T> enumClass) {
+    public static <T extends Enum<T>> boolean run(String str, Class<T> enumClass) {
         if (enumClass == null || str == null) {
             return false;
         }
