@@ -6,11 +6,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.FIELD})
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {EnumValueValidator.class})
 public @interface Enumeration {
-    String message() default "Invalid Enum value.";
+    String message() default "Invalid value Enum";
 
     Class<?>[] groups() default {};
 
@@ -18,5 +18,5 @@ public @interface Enumeration {
 
     Class<? extends Enum<?>> enumClass();
 
-    boolean ignoreCase() default false;
+    boolean optional() default false;
 }
