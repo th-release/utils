@@ -1,39 +1,34 @@
-package com.threlease.base.utils.enumeration;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class EnumValueValidator implements ConstraintValidator<Enumeration, CharSequence> {
+public class EnumValueValidator implements ConstraintValidator<Enumeration, Enum<?>> {
+
+    private Class<? extends Enum<?>> enumClass;
     private Enumeration annotation;
-
-
     @Override
-    public void initialize(Enumeration annotation) {
-        this.annotation = annotation;
+    public void initialize(Enumeration constraintAnnotation) {
+        enumClass = constraintAnnotation.enumClass();
+        this.annotation = constraintAnnotation;
     }
 
     @Override
-    public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return true;
-        }
-
-        boolean isValid = false;
-        Enum<?>[] enumValues = annotation.enumClass().getEnumConstants();
-        for (Enum<?> enumValue : enumValues) {
-            if (annotation.ignoreCase()) {
-                if (enumValue.name().equalsIgnoreCase(value.toString())) {
-                    isValid = true;
-                    break;
-                }
-            } else {
-                if (enumValue.name().equals(value.toString())) {
-                    isValid = true;
-                    break;
-                }
+    public boolean isValid(Enum<?> value, ConstraintValidatorContext context) {
+        if (annotation.optional()) {
+            if (value == null) {
+                return true; // Optional한 필드면 유효하다고 간주
+            }
+        } else {
+            if (value == null) {
+                return false;
             }
         }
 
-        return isValid;
+        for (Enum<?> enumValue : enumClass.getEnumConstants()) {
+            if (enumValue.equals(value)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
