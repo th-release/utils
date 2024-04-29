@@ -1,5 +1,4 @@
-package com.secure.chat.utils;
-
+import java.math.BigInteger;
 import java.security.SecureRandom;
 
 public class GetRandom {
@@ -8,23 +7,17 @@ public class GetRandom {
     private static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String ALPHANUMERIC = NUMERIC + LOWERCASE + UPPERCASE;
 
-    private String getCharacters(String type) {
+    private static String getCharacters(RandomType type) {
         return switch (type) {
-            case "numeric" -> NUMERIC;
-            case "lowercase" -> LOWERCASE;
-            case "uppercase" -> UPPERCASE;
-            case "all", "alphanumeric" -> ALPHANUMERIC;
+            case NUMBER -> NUMERIC;
+            case LOWERCASE -> LOWERCASE;
+            case UPPERCASE -> UPPERCASE;
+            case ALL -> ALPHANUMERIC;
             default -> throw new IllegalArgumentException("Invalid type: " + type);
         };
-
-//        if (type.equals("numeric")) return NUMERIC;
-//        else if (type.equals("lowercase")) return LOWERCASE;
-//        else if (type.equals("uppercase")) return UPPERCASE;
-//        else if (type.equals("all") || type.equals("alphanumeric")) return ALPHANUMERIC;
-//        else throw new IllegalArgumentException("Invalid type: " + type);
     }
 
-    public String getRandom(String type, int length) {
+    public static String run(RandomType type, int length) {
         StringBuilder result = new StringBuilder();
         String characters = getCharacters(type);
         SecureRandom random = new SecureRandom();
@@ -35,5 +28,13 @@ public class GetRandom {
         }
 
         return result.toString();
+    }
+
+    public static String generateRandomHexString(int length) {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[length];
+        random.nextBytes(bytes);
+        BigInteger num = new BigInteger(1, bytes);
+        return String.format("%0" + (length << 1) + "x", num);
     }
 }
