@@ -49,4 +49,52 @@ public class Hash {
             return null;
         }
     }
+
+    public String hexToBinary2(String hex) {
+        HashMap<Character, String> lookup = new HashMap<>();
+
+        lookup.put('0', "0000");
+        lookup.put('1', "0001");
+        lookup.put('2', "0010");
+        lookup.put('3', "0011");
+        lookup.put('4', "0100");
+        lookup.put('5', "0101");
+        lookup.put('6', "0110");
+        lookup.put('7', "0111");
+        lookup.put('8', "1000");
+        lookup.put('9', "1001");
+        lookup.put('a', "1010");
+        lookup.put('b', "1011");
+        lookup.put('c', "1100");
+        lookup.put('d', "1101");
+        lookup.put('e', "1110");
+        lookup.put('f', "1111");
+        lookup.put('A', "1010");
+        lookup.put('B', "1011");
+        lookup.put('C', "1100");
+        lookup.put('D', "1101");
+        lookup.put('E', "1110");
+        lookup.put('F', "1111");
+
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0, len = hex.length(); i < len; i++) {
+            ret.append(lookup.get(hex.charAt(i)));
+        }
+        return ret.toString();
+    }
+
+    public String hexToBinary(String hex) {
+        BigInteger num = new BigInteger(hex, 16);
+        return num.toString(2);
+    }
+
+    public String base64Encode(String str) {
+        byte[] encodedBytes = Base64.getEncoder().encode(str.getBytes());
+        return new String(encodedBytes);
+    }
+
+    public String base64Decode(String str) {
+        byte[] decodedBytes = Base64.getDecoder().decode(str.getBytes());
+        return new String(decodedBytes);
+    }
 }
