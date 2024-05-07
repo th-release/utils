@@ -3,12 +3,12 @@ import java.io.IOException;
 import java.util.*;
 
 public class StringUtility {
-    public Map<String, String> stringToJson(String jsonString) throws IOException {
+    public static Map stringToJson(String jsonString) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(jsonString, Map.class);
     }
 
-    public String mapToJson(Map<String, String> map) {
+    public static String mapToJson(Map<String, String> map) {
         StringBuilder json = new StringBuilder("{");
         for (Map.Entry<String, String> entry : map.entrySet()) {
             json.append("\"").append(entry.getKey()).append("\":\"").append(entry.getValue()).append("\",");
@@ -18,7 +18,7 @@ public class StringUtility {
         return json.toString();
     }
 
-    public String mapToParams(Map<String, String> maps) {
+    public static String mapToParams(Map<String, String> maps) {
         StringBuilder paramString = new StringBuilder();
         for (Map.Entry<String, String> entry : maps.entrySet()) {
             paramString.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
@@ -30,5 +30,10 @@ public class StringUtility {
     public static <T> T stringToClass(String jsonString, Class<T> classT) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(jsonString, classT);
+    }
+
+    public static <T> T stringToList(String jsonString) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return (T) objectMapper.readValue(jsonString, new TypeReference<List<T>>() {});
     }
 }
