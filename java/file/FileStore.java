@@ -15,6 +15,17 @@ public class FileStore {
 
     public String getFullPath(String filename) { return fileDir + File.separator + filename; }
 
+    public Failable<Boolean, String> deleteFile(String name) {
+        Path path = Paths.get(this.fileDir + File.separator + name);
+
+        try {
+            Files.delete(path);
+            return Failable.success(true);
+        } catch (IOException e) {
+            return Failable.error(e.getMessage());
+        }
+    }
+    
     public Failable<UploadFile, String> storeFile(MultipartFile multipartFile) {
 
         if(multipartFile.isEmpty()) {
