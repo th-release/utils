@@ -1,6 +1,8 @@
 // compileOnly 'org.projectlombok:lombok'
 // annotationProcessor 'org.projectlombok:lombok'
+// com.google.gson.Gson
 
+import com.google.gson.Gson;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -17,14 +19,9 @@ public class BasicResponse {
     private Optional<String> message;
     private Optional<Object> data;
 
-    public String toJson() throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode jsonNode = objectMapper.createObjectNode();
+    public String toJson() {
+        Gson gson = new Gson();
 
-        jsonNode.put("success", success);
-        message.ifPresent(s -> jsonNode.put("message", s));
-        data.ifPresent(o -> jsonNode.put("data", objectMapper.valueToTree(o)));
-
-        return objectMapper.writeValueAsString(jsonNode);
+        return gson.toJson(this);
     }
 }
