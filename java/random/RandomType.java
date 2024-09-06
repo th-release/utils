@@ -4,5 +4,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum RandomType {
-    ALL, NUMBER, LOWERCASE, UPPERCASE, HEXADECIMAL
+    ALL, NUMBER, LOWERCASE, UPPERCASE
 }
