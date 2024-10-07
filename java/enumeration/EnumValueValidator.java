@@ -5,6 +5,7 @@ public class EnumValueValidator implements ConstraintValidator<Enumeration, Enum
 
     private Class<? extends Enum<?>> enumClass;
     private Enumeration annotation;
+
     @Override
     public void initialize(Enumeration constraintAnnotation) {
         enumClass = constraintAnnotation.enumClass();
@@ -19,6 +20,9 @@ public class EnumValueValidator implements ConstraintValidator<Enumeration, Enum
             }
         } else {
             if (value == null) {
+                context.disableDefaultConstraintViolation();
+                context.buildConstraintViolationWithTemplate(annotation.message())
+                        .addConstraintViolation();
                 return false;
             }
         }
@@ -29,6 +33,9 @@ public class EnumValueValidator implements ConstraintValidator<Enumeration, Enum
             }
         }
 
+        context.disableDefaultConstraintViolation();
+        context.buildConstraintViolationWithTemplate(annotation.message())
+                .addConstraintViolation();
         return false;
     }
 }
