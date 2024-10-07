@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {EnumValueValidator.class})
 public @interface Enumeration {
-    String message() default "Invalid value Enum";
+    String message() default "Invalid value Enum"; // 기본 메시지
 
     Class<?>[] groups() default {};
 
@@ -19,4 +19,7 @@ public @interface Enumeration {
     Class<? extends Enum<?>> enumClass();
 
     boolean optional() default false;
+
+    // 커스텀 메시지를 지원하기 위해 추가
+    String customMessage() default "";
 }
