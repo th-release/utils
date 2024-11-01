@@ -2,11 +2,11 @@
 // annotationProcessor 'org.projectlombok:lombok'
 // com.google.gson.Gson
 
-import com.google.gson.Gson;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import com.google.gson.Gson;
 
 import java.util.Optional;
 
@@ -14,10 +14,10 @@ import java.util.Optional;
 @Getter
 @Setter
 @Builder
-public class BasicResponse {
+public class BasicResponse<T> {
     private boolean success;
     private Optional<String> message;
-    private Optional<Object> data;
+    private Optional<T> data;
 
     public String toJson() {
         Gson gson = new Gson();
